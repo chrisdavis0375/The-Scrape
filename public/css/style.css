@@ -19,6 +19,40 @@
 }
 
 #scraper-jumbotron {
-  height: 250px;
+  height: 300px;
   background-image: url("../img/newspaper.jpg");
+}
+
+.article-boxes {
+  background: lightgray;
+  height: 250px;
+  border: solid black 2px;
+}
+
+.article-images {
+  position: relative;
+  top: 45px;
+  left: 130px;
+  width: 400px;
+  height: 150px;
+}
+
+#comment-section {
+  height: 125px;
+  background: grey;
+}
+
+.comment-text {
+  position: relative;
+  left: 240px;
+}
+
+textarea {
+  position: relative;
+  left: 240px;
+}
+
+#footer {
+  background: lightgrey;
+  height: 125px;
 }

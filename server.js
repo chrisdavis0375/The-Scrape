@@ -26,6 +26,10 @@ app.get("/", function(req, res) {
   res.render("index");
 });
 
+app.get("/saved", function(req, res) {
+  res.render("saved");
+});
+
 app.listen(PORT, function(err) {
   if (err) {
     console.log(err);
