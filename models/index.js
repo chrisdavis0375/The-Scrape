@@ -1,6 +1,6 @@
 // Exporting all models
 
 module.exports = {
-  Article: require("./article"),
-  Note: require("./comment")
+  Article: require("./Article"),
+  Comment: require("./Comment")
 };

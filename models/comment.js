@@ -1,12 +1,12 @@
-//var mongoose = require("mongoose");
+var mongoose = require("mongoose");
 
-//var Schema = mongoose;
-//var commentSchema = new Schema({
-//title: String,
+var Schema = mongoose.Schema;
+var CommentSchema = new Schema({
+  title: String,
 
-//body: String
-//});
+  body: String
+});
 
-//var comment = mongoose.model("comment", commentSchema);
+var Comment = mongoose.model("Comment", CommentSchema);
 
-//module.exports = comment;
+module.exports = Comment;
