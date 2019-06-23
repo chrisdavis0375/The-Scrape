@@ -43,13 +43,17 @@ app.get("/saved", function(req, res) {
 app.get("/scrape", function(req, res) {
   axios.get("https://www.nytimes.com/section/world").then(function(response) {
     var $ = cheerio.load(response.data);
-    console.log($);
-    $("figure img").each(function(i, element) {
-      var result = {};
-      var photo = $(element).findAll(".css-11cwn6f");
-      result.title = $(this).children("figure");
-      //console.log(result.title);
-      console.log(photo);
+    //console.log($);
+    var result = {};
+
+    $(".css-1r6mpip div").each(function(i, element) {
+      result.title = $(this)
+        .children("h2")
+        .text();
+      result.summary = $(this)
+        .children("p")
+        .text();
+      console.log(result);
     });
   });
 });
