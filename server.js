@@ -26,7 +26,9 @@ app.engine(
 
 app.set("view engine", "handlebars");
 
-mongoose.connect("mongodb://localhost/articledb", {
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/articlesdb";
+
+mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true
 });
 
@@ -43,14 +45,21 @@ app.get("/saved", function(req, res) {
 // SCRAPE ROUTE
 // ======================================================================
 app.get("/scrape", function(req, res) {
+  db.Article.find()
+    .remove()
+    .exec();
   axios.get("https://www.nytimes.com/section/world").then(function(response) {
     var $ = cheerio.load(response.data);
     //console.log($);
-    var result = {};
 
-    $(".css-1r6mpip div").each(function(i, element) {
+    $("#collection-world article").each(function(i, element) {
+      let result = {};
+
+      if (i > 4) {
+        return false;
+      }
       result.title = $(this)
-        .children("h2")
+        .children("div")
         .text();
       result.summary = $(this)
         .children("p")
@@ -58,6 +67,7 @@ app.get("/scrape", function(req, res) {
       console.log(result);
 
       //Creates a new Article in MongoDB using Article modal
+
       db.Article.create(result)
         .then(function(dbArticle) {
           console.log(dbArticle);
@@ -71,7 +81,7 @@ app.get("/scrape", function(req, res) {
 });
 
 app.get("/articles", function(req, res) {
-  db.Article.find({})
+  db.Article.find()
     .then(function(dbArticle) {
       res.json(dbArticle);
     })
