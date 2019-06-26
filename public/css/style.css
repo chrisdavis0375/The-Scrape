@@ -23,7 +23,13 @@
   background-image: url("../img/newspaper.jpg");
 }
 
-.article-boxes {
+.article-content-boxes {
+  background: lightgray;
+  height: 250px;
+  border: solid black 2px;
+}
+
+.article-image-boxes {
   background: lightgray;
   height: 250px;
   border: solid black 2px;

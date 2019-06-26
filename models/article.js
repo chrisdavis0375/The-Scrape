@@ -8,6 +8,9 @@ var ArticleSchema = new Schema({
     type: String
     //required: true
   },
+  summary: {
+    type: String
+  },
   link: {
     type: String
     //required: true

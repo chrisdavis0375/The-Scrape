@@ -48,36 +48,40 @@ app.get("/scrape", function(req, res) {
   db.Article.find()
     .remove()
     .exec();
-  axios.get("https://www.nytimes.com/section/world").then(function(response) {
-    var $ = cheerio.load(response.data);
-    //console.log($);
+  axios
+    .get("https://www.washingtonpost.com/world/?utm_term=.11cd4448bc7d")
+    .then(function(response) {
+      var $ = cheerio.load(response.data);
+      //console.log($);
 
-    $("#collection-world article").each(function(i, element) {
-      let result = {};
+      $(".story-body").each(function(i, element) {
+        let result = {};
 
-      if (i > 4) {
-        return false;
-      }
-      result.title = $(this)
-        .children("div")
-        .text();
-      result.summary = $(this)
-        .children("p")
-        .text();
-      console.log(result);
+        // result.image = $(this)
+        //   .children("img")
+        //   .attr("src")
+        result.title = $(this)
+          .children(".story-headline")
+          .children("h2")
+          .text();
+        result.summary = $(this)
+          .children(".story-description")
+          .children("p")
+          .text();
+        console.log(result);
 
-      //Creates a new Article in MongoDB using Article modal
+        //Creates a new Article in MongoDB using Article modal
 
-      db.Article.create(result)
-        .then(function(dbArticle) {
-          console.log(dbArticle);
-        })
-        .catch(function(err) {
-          console.log(err);
-        });
+        db.Article.create(result)
+          .then(function(dbArticle) {
+            console.log(dbArticle);
+          })
+          .catch(function(err) {
+            console.log(err);
+          });
+      });
+      res.send("Scrape Complete");
     });
-    res.send("Scrape Complete");
-  });
 });
 
 app.get("/articles", function(req, res) {
